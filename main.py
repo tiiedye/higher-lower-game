@@ -33,24 +33,31 @@ def update_score():
     return score + 1
 
 
+def update_a(opt_a, opt_b):
+    follower_count_a = opt_a['follower_count']
+    follower_count_b = opt_b['follower_count']
+
+    if follower_count_a > follower_count_b:
+        return opt_a
+    else:
+        return opt_b
+
+
 print(logo)
 print("Instructions:")
-print("You will be given two options to choose from. The goal is to guess which option has more Instagram followers. "
+print("You will be given two options to choose from. The goal is to guess which option has more Instagram followers ("
+      "not using real follower counts). "
       "\nCorrect guesses add to your score, an incorrect guess will end the game. \nGood luck!\n")
 
 score = 0
 game_over = False
+option_a = random.choice(data)
+option_b = random.choice(data)
 
 while not game_over:
-    option_a = random.choice(data)
-    option_b = random.choice(data)
-
     # If both A and B are the same, reassign B until they are different
     while option_a == option_b:
         option_b = random.choice(data)
-
-    print(option_a)
-    print(option_b)
 
     print(f"A: {option_a['name']}, a {option_a['description']} from {option_a['country']}")
     print(vs)
@@ -64,6 +71,8 @@ while not game_over:
     if check_answer(option_a, option_b, user_input):
         score = update_score()
         print(f"Correct! Your current score is: {score}\n")
+        option_a = update_a(option_a, option_b)
+        option_b = random.choice(data)
     else:
         game_over = True
         print(f"Sorry, incorrect. Your final score is: {score}")
