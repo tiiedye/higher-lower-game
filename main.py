@@ -3,6 +3,36 @@ import random
 from game_data import data
 from art import logo, vs
 
+
+# Check's the user's answer against the two options and determines who has the higher follower count, and if the user
+# is correct
+def check_answer(opt_a, opt_b, answer):
+    follower_count_a = opt_a['follower_count']
+    follower_count_b = opt_b['follower_count']
+    winner = ""
+    user_choice = ""
+
+    if follower_count_a > follower_count_b:
+        winner = opt_a['name']
+    else:
+        winner = opt_b['name']
+
+    if answer == "a":
+        user_choice = opt_a['name']
+    else:
+        user_choice = opt_b['name']
+
+    if user_choice == winner:
+        return True
+    else:
+        return False
+
+
+# Updates user's score
+def update_score():
+    return score + 1
+
+
 print(logo)
 print("Instructions:")
 print("You will be given two options to choose from. The goal is to guess which option has more Instagram followers. "
@@ -26,9 +56,14 @@ while not game_over:
     print(vs)
     print(f"B: {option_b['name']}, a {option_b['description']} from {option_b['country']}")
 
-    user_input = input(f"Who has more Instagram followers, {option_a['name']} [A] or {option_b['name']} [B]").lower()
+    user_input = input(f"Who has more Instagram followers, {option_a['name']} [A] or {option_b['name']} [B]: ").lower()
 
     while user_input != "a" and user_input != "b":
-        user_input = input("Invalid input. Please choose A or B:")
+        user_input = input("Invalid input. Please choose A or B: ")
 
-    game_over = True
+    if check_answer(option_a, option_b, user_input):
+        score = update_score()
+        print(f"Correct! Your current score is: {score}\n")
+    else:
+        game_over = True
+        print(f"Sorry, incorrect. Your final score is: {score}")
