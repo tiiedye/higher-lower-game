@@ -70,9 +70,9 @@ while not game_over:
 
     if check_answer(option_a, option_b, user_input):
         score = update_score()
-        print(f"Correct! Your current score is: {score}\n")
+        print(f"\nCorrect! Your current score is: {score}\n")
         option_a = update_a(option_a, option_b)
         option_b = random.choice(data)
     else:
         game_over = True
-        print(f"Sorry, incorrect. Your final score is: {score}")
+        print(f"\nSorry, incorrect. Your final score is: {score}")
